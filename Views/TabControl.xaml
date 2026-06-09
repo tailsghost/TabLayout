@@ -28,7 +28,7 @@
 
         <ItemsControl
             VerticalAlignment="Top"
-            Background="{DynamicResource TabBackgroundHover}"
+            Background="{DynamicResource SolidBackgroundFillColorMainAppBrush}"
             ItemsSource="{Binding Items}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>

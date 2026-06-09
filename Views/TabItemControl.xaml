@@ -20,24 +20,25 @@
     </UserControl.Resources>
     <Grid Margin="5,0,0,0">
         <Border
-            BorderBrush="LightGray"
             BorderThickness="1,1,1,0"
             CornerRadius="5,5,0,0"
             MouseLeftButtonDown="Border_MouseLeftButtonDown">
             <Border.Style>
                 <Style TargetType="Border">
-                    <Setter Property="Background" Value="{DynamicResource TabBackground}" />
+                    <Setter Property="BorderBrush" Value="LightGray" />
+                    <Setter Property="Background" Value="{DynamicResource CardBackgroundFillColorDefaultMenuBrush}" />
                     <Setter Property="Cursor" Value="Hand" />
                     <Setter Property="Margin" Value="0,3,0,0" />
                     <Setter Property="Padding" Value="5" />
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding IsSelected}" Value="True">
-                            <Setter Property="Background" Value="{DynamicResource TabContentBackground}" />
+                            <Setter Property="BorderBrush" Value="DodgerBlue" />
+                            <Setter Property="Background" Value="{DynamicResource ApplicationBackgroundBrush}" />
                             <Setter Property="Cursor" Value="Arrow" />
                             <Setter Property="Margin" Value="0,1,0,-0.5" />
                         </DataTrigger>
                         <DataTrigger Binding="{Binding IsActive}" Value="False">
-                            <Setter Property="Background" Value="{DynamicResource TabBackgroundDisabled}" />
+                            <Setter Property="Background" Value="{DynamicResource TextControlBackgroundDisabled}" />
                             <Setter Property="Cursor" Value="Arrow" />
                         </DataTrigger>
                     </Style.Triggers>
@@ -47,7 +48,6 @@
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 FontSize="11"
-                Foreground="{DynamicResource TabHeaderForeground}"
                 Text="{Binding Header}" />
         </Border>
         <Rectangle
@@ -61,7 +61,7 @@
                     <Setter Property="Panel.ZIndex" Value="1" />
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding IsSelected}" Value="True">
-                            <Setter Property="Fill" Value="{DynamicResource TabContentBackground}" />
+                            <Setter Property="Fill" Value="{DynamicResource CardBackgroundFillColorDefaultMenuBrush}" />
                             <Setter Property="Panel.ZIndex" Value="101" />
                         </DataTrigger>
                     </Style.Triggers>
