@@ -33,6 +33,11 @@ public class TabItem : BaseViewModel, IDisposable
 
     public INotifyPropertyChanged? ViewModel { get; private set; }
 
+    public TabItem()
+    {
+
+    }
+
     public TabItem(INotifyPropertyChanged viewmodel = null)
     {
         ViewModel = viewmodel;

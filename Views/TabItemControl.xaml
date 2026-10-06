@@ -18,27 +18,38 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid Margin="5,0,0,0">
+    <Grid>
+        <!--
+            BorderThickness is now CONSTANT ("1,1,1,0") across every state -
+            only the brush color changes. This guarantees the tab's width
+            never changes on selection, so neighboring tabs cannot shift.
+            The bottom underline for non-selected tabs is a separate
+            overlay (see the Rectangle below) that doesn't affect layout
+            size at all.
+        -->
         <Border
+            Height="32"
+            Padding="15,0,15,0"
+            VerticalAlignment="Top"
             BorderThickness="1,1,1,0"
-            CornerRadius="5,5,0,0"
             MouseLeftButtonDown="Border_MouseLeftButtonDown">
             <Border.Style>
                 <Style TargetType="Border">
-                    <Setter Property="BorderBrush" Value="LightGray" />
-                    <Setter Property="Background" Value="{DynamicResource CardBackgroundFillColorDefaultMenuBrush}" />
+                    <Setter Property="BorderBrush" Value="Transparent" />
+                    <Setter Property="Background" Value="{DynamicResource TabBackground}" />
                     <Setter Property="Cursor" Value="Hand" />
-                    <Setter Property="Margin" Value="0,3,0,0" />
-                    <Setter Property="Padding" Value="5" />
+                    <Setter Property="Padding" Value="{DynamicResource TabPadding}" />
                     <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource TabBackgroundHover}" />
+                        </Trigger>
                         <DataTrigger Binding="{Binding IsSelected}" Value="True">
-                            <Setter Property="BorderBrush" Value="DodgerBlue" />
-                            <Setter Property="Background" Value="{DynamicResource ApplicationBackgroundBrush}" />
+                            <Setter Property="BorderBrush" Value="{DynamicResource AccentBrush}" />
+                            <Setter Property="Background" Value="{DynamicResource TabBackgroundChecked}" />
                             <Setter Property="Cursor" Value="Arrow" />
-                            <Setter Property="Margin" Value="0,1,0,-0.5" />
                         </DataTrigger>
                         <DataTrigger Binding="{Binding IsActive}" Value="False">
-                            <Setter Property="Background" Value="{DynamicResource TextControlBackgroundDisabled}" />
+                            <Setter Property="Background" Value="{DynamicResource TabBackgroundDisabled}" />
                             <Setter Property="Cursor" Value="Arrow" />
                         </DataTrigger>
                     </Style.Triggers>
@@ -47,22 +58,41 @@
             <TextBlock
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                FontSize="11"
-                Text="{Binding Header}" />
+                FontFamily="{DynamicResource TabFontFamily}"
+                FontSize="12"
+                Text="{Binding Header}"
+                TextTrimming="CharacterEllipsis">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Foreground" Value="{DynamicResource TabForeground}" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                                <Setter Property="Foreground" Value="{DynamicResource TabForegroundChecked}" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsActive}" Value="False">
+                                <Setter Property="Foreground" Value="{DynamicResource TabForegroundDisabled}" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
         </Border>
+
+        <!--
+            Bottom underline for non-selected tabs. An overlay, positioned
+            absolutely inside the Grid - never affects the tab's width or
+            height, so it cannot cause any shifting.
+        -->
         <Rectangle
-            Height="1"
-            Margin="0,29,0,0"
+            Height="2"
             VerticalAlignment="Bottom"
-            Panel.ZIndex="101">
+            IsHitTestVisible="False">
             <Rectangle.Style>
                 <Style TargetType="Rectangle">
-                    <Setter Property="Fill" Value="Transparent" />
-                    <Setter Property="Panel.ZIndex" Value="1" />
+                    <Setter Property="Fill" Value="{DynamicResource AccentBrush}" />
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding IsSelected}" Value="True">
-                            <Setter Property="Fill" Value="{DynamicResource CardBackgroundFillColorDefaultMenuBrush}" />
-                            <Setter Property="Panel.ZIndex" Value="101" />
+                            <Setter Property="Fill" Value="Transparent" />
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>

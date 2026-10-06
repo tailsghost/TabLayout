@@ -18,17 +18,35 @@
     </UserControl.Resources>
     <Grid>
 
+        <!--  Backdrop behind the tab row, with a full-width accent line
+              across the bottom (like the native VS document tab strip).
+              The selected tab's own border sits directly on top of this
+              line, so they merge automatically - same color, no need to
+              hide/patch anything, even if pixel alignment isn't perfect.  -->
         <Border
-            Margin="0,30,0,0"
-            BorderBrush="{DynamicResource TabBorder}"
-            BorderThickness="1"
-            CornerRadius="5">
+            Height="32"
+            VerticalAlignment="Top"
+            Background="{DynamicResource HeaderStripBackground}"
+            BorderBrush="{DynamicResource AccentBrush}"
+            BorderThickness="0,0,0,2" />
+
+        <!--  Content card. Always outlined in the accent color; no top border,
+              because the selected tab's own border (no bottom side) sits
+              directly above it and visually continues the same outline.
+              No other tab draws a line, so there is nothing to hide/patch.  -->
+        <Border
+            Margin="0,32,0,0"
+            Padding="14"
+            Background="{DynamicResource TabContentBackground}"
+            BorderBrush="{DynamicResource AccentBrush}"
+            BorderThickness="1,0,1,1"
+            Effect="{DynamicResource ContentCardShadow}">
             <ContentControl Content="{Binding SelectedItem.Content}" />
         </Border>
 
         <ItemsControl
             VerticalAlignment="Top"
-            Background="{DynamicResource SolidBackgroundFillColorMainAppBrush}"
+            Background="Transparent"
             ItemsSource="{Binding Items}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
